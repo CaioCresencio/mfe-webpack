@@ -1,12 +1,13 @@
 <script setup lang="ts">
 
-import Teste from './components/Teste.vue'
+  import Todo from './components/Todo.vue'
+
 </script>
 
 <template>
   <header>
     <div class="wrapper">
-      <Teste />
+      <Todo />
     </div>
   </header>
 

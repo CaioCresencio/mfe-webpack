@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npx serve -s dist -l 3002",
+    "start": "npx serve -s dist -l 3001",
     "dev": "webpack serve --open --env mode=development --history-api-fallback",
     "dev1": "webpack-dev-server --mode development",
     "build": "webpack --config webpack.config.js --progress",
@@ -36,4 +36,5 @@
     "vue-cli-plugin-webpack-bundle-analyzer": "4.0.0",
     "webpack-bundle-analyzer": "4.5.0"
   }
+
 }

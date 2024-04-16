@@ -1,1 +1,1 @@
-declare module "remoteMfe/Teste"
+

@@ -3,7 +3,7 @@
 import { defineAsyncComponent, ref, type VNode, h } from 'vue';
 
 const Todo = defineAsyncComponent({
-	loader: () => import("remoteMfe/Teste"),
+	loader: () => import("remoteMfe/TodoPlus"),
 	errorComponent: (): VNode => h("p", "Erro ao importar componente remoto"),
 });
 

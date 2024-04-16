@@ -5,9 +5,7 @@
     "vitest.config.*",
     "cypress.config.*",
     "nightwatch.conf.*",
-    "playwright.config.*",
-    "**/*.ts",
-    "**/*.tsx"
+    "playwright.config.*"
   ],
   "compilerOptions": {
     "composite": true,
