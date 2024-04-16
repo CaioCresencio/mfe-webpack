@@ -1,2 +1,1 @@
-declare module "remoteMfe/Todo"
-declare module "mfePost/Button"
+declare module "remoteMfe/Teste"

@@ -1,30 +1,28 @@
 const webpack = require("webpack");
 const path = require("path");
-const deps = require("./package.json").dependencies;
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { VueLoaderPlugin } = require("vue-loader");
 const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
+const deps = require("./package.json").dependencies;
 
 module.exports = {
+    
     mode: "development",
-    entry: './src/main.ts',
+    entry: './src/index.ts',
     output: {
-        uniqueName: "todo",
-        path: path.resolve(__dirname, "dist"),
-        filename: "bundle.js",
-        asyncChunks: true,
-        clean: true
-    },
+        publicPath: 'auto', // <- ERROR: Avoid modifying webpack output.publicPath directly. Use the "publicPath" option instead.
+      },
+      optimization: {
+        splitChunks: false,
+      },
+    cache: false,
+    devtool: 'source-map',
     optimization: {
-        splitChunks: {
-            chunks: "async",
-        },
-        flagIncludedChunks: true,
-        mergeDuplicateChunks: true,
-        minimize: true,
+      minimize: false,
     },
+    target: 'web',
     resolve: {
         extensions: [".tsx", ".ts", ".js", ".jsx"]
     },
@@ -50,22 +48,30 @@ module.exports = {
                 test: /\.vue$/,
                 use: "vue-loader",
             },
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: {
+                  loader: "babel-loader",
+                },
+            }
 
         ]
     },
     plugins: [
         new webpack.DefinePlugin({
-            __VUE_OPTIONS_API__: JSON.stringify(true),
-            __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
-            __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false)
-          }),
+            __VUE_OPTIONS_API__: true,
+            __VUE_PROD_DEVTOOLS__: false
+        }),
         new VueLoaderPlugin(),
         new ModuleFederationPlugin({
             name: "todo",
             filename: "remoteEntry.js",
             remotes: {
-                mfePost: `mfePost@http://localhost:5000/assets/remoteEntry.js`,
                 remoteMfe: `remoteMfe@http://localhost:3001/remoteEntry.js`,
+            },
+            shared: {
+              ...deps
             },
          
         }),
@@ -74,9 +80,6 @@ module.exports = {
             template: path.join(__dirname, "index.html"),
             inject: true
         }),
-        new NodePolyfillPlugin(),
-        
-
     ],
     devServer: {
         port: "3002",
